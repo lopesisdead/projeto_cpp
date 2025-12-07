@@ -1,77 +1,42 @@
 #include <iostream>
 #include <string>
 
-class Animal{
-    
-    private:
-        std::string name;
-        std::string color;
-        int length;
-    
-    public:
-        // Construtor da classe
-        Animal(std::string name, std::string color, int length){
-            this->name = name;
-            this->color = color;
-            this->length = length;
-        }
+class Personagem{
+private:
+    std::string nome;
+    std::string descricao;
+    int vida;
+    int idade;
+    int id_faccao;
+    int id_criacao;
 
-        // métodos de get
-        std::string getName(){ return name; }
-        std::string getColor(){ return color; }
-        int getLength(){ return length; }
+    int dinheiro_em_maos; // Dinheiro que o personagem carrega
+    int saldo_bancario; // Dinheiro na conta bancária
 
-        // métodos de set
-        void setName(std::string name){ this->name = name; }
-        void setColor(std::string color){ this->color = color; }
-        void setLength(int length){ this->length = length; }
+public:
+    // Construtor
+    Personagem(std::string n, std::string d, int v, int i, int f, int c)
+        : nome(n), descricao(d), vida(v), idade(i), id_faccao(f), id_criacao(c),
+          dinheiro_em_maos(0), saldo_bancario(0) {
+        std::cout << "Personagem " << nome << " criado." << std::endl;
+    }
 
-        // métodos de instância
+    // Getters
+    int getDinheiroNaMao() const {
+        return dinheiro_em_maos;
+    }
 
-        void showInfos(){
-            std::cout << "Nome: " << name << std::endl;
-            std::cout << "Cor: " << color << std::endl;
-            std::cout << "Comprimento: " << length << std::endl;
-        }
-
-        // métodos virtuais puros
-        virtual void makeNoise() = 0;
-        virtual void uniqueAction() = 0;
-
-        // Destrutor virtual é importante ao usar herança com new/delete
-        virtual ~Animal() = default; 
+    int getSaldoBancario() const {
+        return saldo_bancario;
+    }
 };
 
-class Cat : public Animal{
-    public:
-        // Construtor de Cat chamando o construtor da classe base Animal
-        Cat(std::string name, std::string color, int length)
-            : Animal(name, color, length) {}
-
-        void makeNoise() override{
-            std::cout << "Gato: Miau..." << std::endl;
-        }
-
-        void uniqueAction() override{
-            std::cout << "Gato: Se limpando..." << std::endl;
-        }
-};
 
 int main() {
-    Cat juno("Juno", "Escaminha", 35);
-    juno.showInfos();
-    std::cout << "Cor teste: " << juno.getColor() << std::endl;
-    std::cout << "---" << std::endl;
-
-    Animal* minhaGata = new Cat("Flora", "Tricolor", 15);
+    Personagem john_doe("John Doe", "Um cidadao comum", 100, 35, 0, 1001);
     
-    minhaGata->makeNoise(); 
-    minhaGata->uniqueAction();
-    minhaGata->showInfos();
-
-    // desalocando a memória
-    delete minhaGata; 
-    minhaGata = nullptr; // boa prática após delete
+    std::cout << "Dinheiro na Mao: " << john_doe.getDinheiroNaMao() << std::endl; // 500 - 300 + 150 = 350
+    std::cout << "Saldo Bancario: " << john_doe.getSaldoBancario() << std::endl; // 300 - 150 = 150
 
     return 0;
 }
