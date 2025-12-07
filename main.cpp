@@ -22,21 +22,37 @@ public:
     }
 
     // Getters
-    int getDinheiroNaMao() const {
+    int getDinheiroNaMao() {
         return dinheiro_em_maos;
     }
 
-    int getSaldoBancario() const {
+    void setDinheiroNaMao(int quantidadeDinheiro) {
+        dinheiro_em_maos = quantidadeDinheiro;
+        std::cout << quantidadeDinheiro << " foram adicionados à carteira de " << nome << std::endl;
+    }
+
+    int getSaldoBancario() {
         return saldo_bancario;
+    }
+
+    void setDinheiroBanco(int quantidadeDinheiro) {
+        saldo_bancario = quantidadeDinheiro;
+        std::cout << quantidadeDinheiro << " foram adicionados ao saldo bancário de " << nome << std::endl;
     }
 };
 
 
 int main() {
     Personagem john_doe("John Doe", "Um cidadao comum", 100, 35, 0, 1001);
+
+    std::cout << "Dinheiro na mão: " << john_doe.getDinheiroNaMao() << std::endl; // 500 - 300 + 150 = 350
+    std::cout << "Saldo bancário: " << john_doe.getSaldoBancario() << std::endl; // 300 - 150 = 150
+
+    john_doe.setDinheiroBanco(1000);
+    john_doe.setDinheiroNaMao(250);
     
-    std::cout << "Dinheiro na Mao: " << john_doe.getDinheiroNaMao() << std::endl; // 500 - 300 + 150 = 350
-    std::cout << "Saldo Bancario: " << john_doe.getSaldoBancario() << std::endl; // 300 - 150 = 150
+    std::cout << "Dinheiro na mão: " << john_doe.getDinheiroNaMao() << std::endl; // 500 - 300 + 150 = 350
+    std::cout << "Saldo bancário: " << john_doe.getSaldoBancario() << std::endl; // 300 - 150 = 150
 
     return 0;
 }
