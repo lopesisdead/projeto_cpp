@@ -20,10 +20,10 @@ int Personagem::getSaldoBancario() {
 // Definição dos Setters
 void Personagem::setDinheiroNaMao(int quantidadeDinheiro) {
     dinheiro_em_maos = quantidadeDinheiro;
-    std::cout << quantidadeDinheiro << " foram adicionados à carteira de " << nome << std::endl;
+    std::cout << "US$ " << quantidadeDinheiro << " foram adicionados à carteira de " << nome << std::endl;
 }
 
 void Personagem::setDinheiroBanco(int quantidadeDinheiro) {
     saldo_bancario = quantidadeDinheiro;
-    std::cout << quantidadeDinheiro << " foram adicionados ao saldo bancário de " << nome << std::endl;
+    std::cout << "US$ " << quantidadeDinheiro << " foram adicionados ao saldo bancário de " << nome << std::endl;
 }

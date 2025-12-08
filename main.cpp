@@ -20,8 +20,8 @@ int main() {
     personagemSessao.setDinheiroBanco(1000);
     personagemSessao.setDinheiroNaMao(250);
     
-    std::cout << "Dinheiro na mão: " << personagemSessao.getDinheiroNaMao() << std::endl;
-    std::cout << "Saldo bancário: " << personagemSessao.getSaldoBancario() << std::endl << std::endl;
+    std::cout << "Dinheiro na mão: US$ " << personagemSessao.getDinheiroNaMao() << std::endl;
+    std::cout << "Saldo bancário: US$ " << personagemSessao.getSaldoBancario() << std::endl << std::endl;
 
     return 0;
 
