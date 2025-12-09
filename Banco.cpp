@@ -32,20 +32,20 @@ int Banco::criarConta(const Personagem& personagem) {
     return novaConta.numero_conta;
 }
 
-// 2. depositar Dinheiro
+// 2. depositar dinhero
 bool Banco::depositar(int id_personagem, int valor) {
     if (!contas.count(id_personagem)) {
-        std::cout << "Erro: Personagem com ID " << id_personagem << " não possui conta bancária." << std::endl;
+        std::cout << "Erro: personagem com ID " << id_personagem << " não possui conta bancária." << std::endl;
         return false;
     }
     if (valor <= 0) {
-        std::cout << "Depósito falhou: O valor deve ser positivo." << std::endl;
+        std::cout << "Depósito falhou. O valor deve ser positivo." << std::endl;
         return false;
     }
     
     // aumentar o saldo
     contas[id_personagem].saldo += valor;
-    std::cout << "Conta No " << contas[id_personagem].numero_conta << ": Depósito de US$" << valor 
+    std::cout << "Conta #" << contas[id_personagem].numero_conta << ": Depósito de US$" << valor 
               << " realizado. Novo saldo: US$" << contas[id_personagem].saldo << "." << std::endl;
     return true;
 }
@@ -53,7 +53,7 @@ bool Banco::depositar(int id_personagem, int valor) {
 // 3. verificar Saldo
 int Banco::verificarSaldo(int id_personagem) const {
     if (!contas.count(id_personagem)) {
-        std::cout << "Erro: Personagem de ID " << id_personagem << " não possui uma conta bancária." << std::endl;
+        std::cout << "Erro: personagem de ID " << id_personagem << " não possui uma conta bancária." << std::endl;
         return -1; // retorna -1 para indicar erro
     }
     return contas.at(id_personagem).saldo;
