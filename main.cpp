@@ -28,8 +28,10 @@ int main() {
     bancoCentral.depositar(personagemSessao, 200);
     bancoCentral.criarConta(personagemSessao);
 
+
+    std::cout << "Dinheiro na conta bancária de " << personagemSessao.getNomeCompleto() << ": US$" << bancoCentral.getSaldoBancario(personagemSessao) << std::endl;
     bancoCentral.depositar(personagemSessao, 200);
-    bancoCentral.getSaldoBancario(personagemSessao);
+    std::cout << "Dinheiro na conta bancária de " << personagemSessao.getNomeCompleto() << ": US$" << bancoCentral.getSaldoBancario(personagemSessao) << std::endl;
 
 
     return 0;

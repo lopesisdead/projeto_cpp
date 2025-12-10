@@ -27,7 +27,7 @@ public:
     void printContaInexistente(std::string nome_personagem);
 
     // criação conta. associa ela ao ID do personagem
-    long criarConta(Personagem& personagem);
+    void criarConta(Personagem& personagem);
 
     // transações/operações
     bool depositar(Personagem& personagem, long valor);

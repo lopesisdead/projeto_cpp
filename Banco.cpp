@@ -6,23 +6,23 @@ Banco::Banco() : proximo_numero_conta(100000) {
 }
 
 void Banco::printContaExistente(std::string nome_personagem){
-    std::cout << nome_personagem << "já tem uma conta bancária em seu nome.";
+    std::cout << nome_personagem << " já tem uma conta bancária em seu nome." << std::endl;
 }
 
 void Banco::printContaInexistente(std::string nome_personagem){
-    std::cout << "Erro: " << nome_personagem << "não tem uma conta bancária em seu nome.";
+    std::cout << "Erro: " << nome_personagem << " não tem uma conta bancária em seu nome." << std::endl;
 }
 
 // --------------------------------------------------------------------
 
-long Banco::criarConta(Personagem& personagem){
+void Banco::criarConta(Personagem& personagem){
 
     long id_personagem = personagem.getIdCriacao();
     std::string nome_personagem = personagem.getNomeCompleto();
 
     if(verificarExistenciaConta(id_personagem)){
         printContaExistente(nome_personagem);
-        return -1; // indicativo erro
+        return; // indicativo erro
     }
 
     ContaBancaria novaConta;
@@ -32,7 +32,9 @@ long Banco::criarConta(Personagem& personagem){
     // associa o ID do Personagem ao objeto ContaBancaria no mapa
     contas[id_personagem] = novaConta;
 
-    return novaConta.numero_conta;
+    std::cout << "Conta bancária de #" << novaConta.numero_conta << " criada no nome de " << nome_personagem << std::endl;
+
+    return;
 }
 
 // --------------------------------------------------------------------
