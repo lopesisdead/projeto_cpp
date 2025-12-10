@@ -6,11 +6,11 @@ Banco::Banco() : proximo_numero_conta(100000) {
 }
 
 void Banco::printContaExistente(std::string nome_personagem){
-    cout << nome_personagem << "já tem uma conta bancária em seu nome."
+    std::cout << nome_personagem << "já tem uma conta bancária em seu nome.";
 }
 
 void Banco::printContaInexistente(std::string nome_personagem){
-    cout << "Erro: " << nome_personagem << "não tem uma conta bancária em seu nome."
+    std::cout << "Erro: " << nome_personagem << "não tem uma conta bancária em seu nome.";
 }
 
 // --------------------------------------------------------------------
@@ -18,9 +18,9 @@ void Banco::printContaInexistente(std::string nome_personagem){
 long Banco::criarConta(Personagem& personagem){
 
     long id_personagem = personagem.getIdCriacao();
+    std::string nome_personagem = personagem.getNomeCompleto();
 
     if(verificarExistenciaConta(id_personagem)){
-        long nome_personagem = personagem.getNomeCompleto();
         printContaExistente(nome_personagem);
         return -1; // indicativo erro
     }
@@ -96,7 +96,7 @@ bool Banco::sacar(Personagem& personagem, long valor){
 
 // 3. verificar Saldo
 long Banco::getSaldoBancario(Personagem& personagem) {
-    long id_personagem;
+    long id_personagem = personagem.getIdCriacao();
 
     if (verificarExistenciaConta(id_personagem)) {
         return contas.at(id_personagem).saldo;
@@ -118,7 +118,7 @@ long Banco::getConta(Personagem& personagem) {
     return -1; // indica erro. usuário precisa criar a conta primeiro.
 }
 
-bool Banco::verificarExistenciaConta(id_personagem){
+bool Banco::verificarExistenciaConta(long id_personagem){
     if(contas.count(id_personagem)){
         return true;
     }

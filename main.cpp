@@ -25,11 +25,11 @@ int main() {
     
     std::cout << "Dinheiro na mão: US$" << personagemSessao.getDinheiroNaMao() << std::endl;
     
-    bancoCentral.depositar(personagemSessao.getIdCriacao(), 200);
+    bancoCentral.depositar(personagemSessao, 200);
     bancoCentral.criarConta(personagemSessao);
 
-    bancoCentral.depositar(personagemSessao.getIdCriacao(), 200);
-    bancoCentral.getSaldoBancario(personagemSessao.getIdCriacao());
+    bancoCentral.depositar(personagemSessao, 200);
+    bancoCentral.getSaldoBancario(personagemSessao);
 
 
     return 0;

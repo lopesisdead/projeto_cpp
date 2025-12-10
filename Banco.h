@@ -23,17 +23,22 @@ public:
     // construtor
     Banco();
 
+    void printContaExistente(std::string nome_personagem);
+    void printContaInexistente(std::string nome_personagem);
+
     // criação conta. associa ela ao ID do personagem
     long criarConta(Personagem& personagem);
 
     // transações/operações
-    bool depositar(long id_personagem, long valor);
-    bool sacar(long id_personagem, long valor);
+    bool depositar(Personagem& personagem, long valor);
+    bool sacar(Personagem& personagem, long valor);
+    bool aumentarSaldo(long id_personagem, long valor);
+    bool debitarSaldo(long id_personagem, long valor);
 
     // consulta
-    long getSaldoBancario(long id_personagem);
+    long getSaldoBancario(Personagem& personagem);
     long getConta(Personagem& personagem);
-    bool verificarExistenciaConta(Personagem& personagem);
+    bool verificarExistenciaConta(long id_personagem);
 };
 
 #endif // BANCO_H
