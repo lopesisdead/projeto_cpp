@@ -1,24 +1,30 @@
 #include "Banco.h"
 
-
 // construtor
 Banco::Banco() : proximo_numero_conta(100000) {
     std::cout << "Sistema bancário iniciado." << std::endl;
 }
 
-// 1. cria conta e a associa a um personagem
-int Banco::criarConta(const Personagem& personagem) {
+void Banco::printContaExistente(std::string nome_personagem){
+    cout << nome_personagem << "já tem uma conta bancária em seu nome."
+}
 
-    int id_personagem = personagem.getIdCriacao();
-    
-    // verifica se o personagem já tem uma conta
-    if (contas.count(id_personagem)) {
-        std::cout << "Erro: " << personagem.getNomeCompleto() << " já tem uma conta bancária (Número: " 
-                  << contas[id_personagem].numero_conta << ")." << std::endl;
-        return contas[id_personagem].numero_conta;
+void Banco::printContaInexistente(std::string nome_personagem){
+    cout << "Erro: " << nome_personagem << "não tem uma conta bancária em seu nome."
+}
+
+// --------------------------------------------------------------------
+
+long Banco::criarConta(Personagem& personagem){
+
+    long id_personagem = personagem.getIdCriacao();
+
+    if(verificarExistenciaConta(id_personagem)){
+        long nome_personagem = personagem.getNomeCompleto();
+        printContaExistente(nome_personagem);
+        return -1; // indicativo erro
     }
 
-    // cria a nova conta
     ContaBancaria novaConta;
     novaConta.numero_conta = proximo_numero_conta++;
     novaConta.saldo = 0;
@@ -26,35 +32,96 @@ int Banco::criarConta(const Personagem& personagem) {
     // associa o ID do Personagem ao objeto ContaBancaria no mapa
     contas[id_personagem] = novaConta;
 
-    std::cout << "Conta bancária #" << novaConta.numero_conta 
-              << " criada com sucesso para " << personagem.getNomeCompleto() 
-              << " (ID: " << id_personagem << ")." << std::endl;
     return novaConta.numero_conta;
 }
 
-// 2. depositar dinhero
-bool Banco::depositar(int id_personagem, int valor) {
-    if (!contas.count(id_personagem)) {
-        std::cout << "Erro: personagem com ID " << id_personagem << " não possui conta bancária." << std::endl;
-        return false;
-    }
-    if (valor <= 0) {
-        std::cout << "Depósito falhou. O valor deve ser positivo." << std::endl;
-        return false;
-    }
-    
-    // aumentar o saldo
+// --------------------------------------------------------------------
+
+bool Banco::aumentarSaldo(long id_personagem, long valor){
     contas[id_personagem].saldo += valor;
+
     std::cout << "Conta #" << contas[id_personagem].numero_conta << ": Depósito de US$" << valor 
               << " realizado. Novo saldo: US$" << contas[id_personagem].saldo << "." << std::endl;
+
     return true;
 }
 
-// 3. verificar Saldo
-int Banco::verificarSaldo(int id_personagem) const {
-    if (!contas.count(id_personagem)) {
-        std::cout << "Erro: personagem de ID " << id_personagem << " não possui uma conta bancária." << std::endl;
-        return -1; // retorna -1 para indicar erro
+bool Banco::debitarSaldo(long id_personagem, long valor){
+    contas[id_personagem].saldo -= valor;
+
+    std::cout << "Conta #" << contas[id_personagem].numero_conta << ": Débito de US$" << valor 
+              << " realizado. Novo saldo: US$" << contas[id_personagem].saldo << "." << std::endl;
+
+    return true;
+}
+
+bool Banco::depositar(Personagem& personagem, long valor){
+    long id_personagem = personagem.getIdCriacao();
+    std::string nome_personagem = personagem.getNomeCompleto();
+
+    if (!verificarExistenciaConta(id_personagem)) {
+        printContaInexistente(nome_personagem);
+        return false;
     }
-    return contas.at(id_personagem).saldo;
+
+    if (valor <= 0) {
+        std::cout << "Erro. O valor a ser depositado não pode ser negativo." << std::endl;
+        return false;
+    }
+
+    aumentarSaldo(id_personagem, valor);
+    return true;
+}
+
+bool Banco::sacar(Personagem& personagem, long valor){
+    long id_personagem = personagem.getIdCriacao();
+    std::string nome_personagem = personagem.getNomeCompleto();
+
+    if(!verificarExistenciaConta(id_personagem)){
+        printContaInexistente(nome_personagem);
+        return false;
+    }
+
+    if (valor <= 0) {
+        std::cout << "Erro. O valor a ser debitado não pode ser negativo." << std::endl;
+        return false;
+    }
+
+    debitarSaldo(id_personagem, valor);
+    return true;
+
+}
+
+// --------------------------------------------------------------------
+
+// 3. verificar Saldo
+long Banco::getSaldoBancario(Personagem& personagem) {
+    long id_personagem;
+
+    if (verificarExistenciaConta(id_personagem)) {
+        return contas.at(id_personagem).saldo;
+    }
+
+    return -1; // indicativo erro
+}
+
+long Banco::getConta(Personagem& personagem) {
+
+    long id_personagem = personagem.getIdCriacao();
+    
+    // verifica se o personagem já tem uma conta
+    if (verificarExistenciaConta(id_personagem)) {
+        return contas[id_personagem].numero_conta;
+    }
+
+    printContaExistente(personagem.getNomeCompleto());
+    return -1; // indica erro. usuário precisa criar a conta primeiro.
+}
+
+bool Banco::verificarExistenciaConta(id_personagem){
+    if(contas.count(id_personagem)){
+        return true;
+    }
+    
+    return false;
 }

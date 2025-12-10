@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Personagem.h"
+#include "Banco.h"
 
 
 int main() {
@@ -17,14 +18,19 @@ int main() {
 
     Personagem personagemSessao(primeiroNomePersonagem, ultimoNomePersonagem, id_criacao);
 
-    std::cout << "Dinheiro na mão: " << personagemSessao.getDinheiroNaMao() << std::endl; // por padrão, 0
-    std::cout << "Saldo bancário: " << personagemSessao.getSaldoBancario() << std::endl << std::endl; // 0
+    Banco bancoCentral;
 
-    personagemSessao.setDinheiroBanco(1000);
+    std::cout << "Dinheiro na mão: " << personagemSessao.getDinheiroNaMao() << std::endl; // por padrão, 0
     personagemSessao.setDinheiroNaMao(250);
     
     std::cout << "Dinheiro na mão: US$" << personagemSessao.getDinheiroNaMao() << std::endl;
-    std::cout << "Saldo bancário: US$" << personagemSessao.getSaldoBancario() << std::endl << std::endl;
+    
+    bancoCentral.depositar(personagemSessao.getIdCriacao(), 200);
+    bancoCentral.criarConta(personagemSessao);
+
+    bancoCentral.depositar(personagemSessao.getIdCriacao(), 200);
+    bancoCentral.getSaldoBancario(personagemSessao.getIdCriacao());
+
 
     return 0;
 

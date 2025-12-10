@@ -13,26 +13,26 @@ private:
     
     int vida;
     int idade;
-    int id_faccao;
-    int id_criacao;
+    long id_faccao;
+    long id_criacao;
 
-    int dinheiro_em_maos;
+    long dinheiro_em_maos;
 
 public:
     // Construtor - Apenas a declaração
-    Personagem(std::string primeiroNome, std::string ultimoNome, int id_criacao);
+    Personagem(std::string primeiroNome, std::string ultimoNome, long id_criacao);
 
     // Getters
-    int getDinheiroNaMao();
-    int getIdCriacao();
+    long getDinheiroNaMao();
+    long getIdCriacao();
 
     std::string getPrimeiroNome();
     std::string getUltimoNome();
     std::string getNomeCompleto();
 
     // Setters
-    void setDinheiroNaMao(int quantidadeDinheiro);
-    void setDinheiroBanco(int quantidadeDinheiro);
+    void setDinheiroNaMao(long quantidadeDinheiro);
+    void setDinheiroBanco(long quantidadeDinheiro);
 
 };
 

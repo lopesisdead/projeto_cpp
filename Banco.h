@@ -8,8 +8,9 @@
 
 struct ContaBancaria{
     long numero_conta;
+    long saldo;
     long saldo_bancario;
-}
+};
 
 class Banco {
 private:
@@ -23,14 +24,16 @@ public:
     Banco();
 
     // criação conta. associa ela ao ID do personagem
-    long criarConta(const Personagem& personagem);
+    long criarConta(Personagem& personagem);
 
     // transações/operações
-    bool depositar(int id_personagem, long valor);
+    bool depositar(long id_personagem, long valor);
     bool sacar(long id_personagem, long valor);
 
     // consulta
-    int getSaldoBancario(long id_personagem);
+    long getSaldoBancario(long id_personagem);
+    long getConta(Personagem& personagem);
+    bool verificarExistenciaConta(Personagem& personagem);
 };
 
 #endif // BANCO_H

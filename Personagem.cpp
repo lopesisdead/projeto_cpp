@@ -1,18 +1,18 @@
 #include "Personagem.h" // Inclui a declaração da classe
 
 // construtor
-Personagem::Personagem(std::string primeiroNome, std::string ultimoNome, int id_criacao)
+Personagem::Personagem(std::string primeiroNome, std::string ultimoNome, long id_criacao)
     : primeiroNome(primeiroNome), ultimoNome(ultimoNome), descricao(""), vida(100), idade(0), id_faccao(0), id_criacao(id_criacao),
       dinheiro_em_maos(0){
     std::cout << "Personagem " << getNomeCompleto() << " criado." << std::endl;
 }
 
 // Getters
-int Personagem::getDinheiroNaMao() {
+long Personagem::getDinheiroNaMao() {
     return dinheiro_em_maos;
 }
 
-int Personagem::getIdCriacao() {
+long Personagem::getIdCriacao() {
     return id_criacao;
 }
 
@@ -30,7 +30,7 @@ std::string Personagem::getNomeCompleto(){
 }
 
 // Setters
-void Personagem::setDinheiroNaMao(int quantidadeDinheiro) {
+void Personagem::setDinheiroNaMao(long quantidadeDinheiro) {
     dinheiro_em_maos = quantidadeDinheiro;
     std::cout << "US$ " << quantidadeDinheiro << " foram adicionados à carteira de " << getPrimeiroNome() << std::endl;
 }
