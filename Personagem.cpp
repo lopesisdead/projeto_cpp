@@ -34,3 +34,13 @@ void Personagem::setDinheiroNaMao(long quantidadeDinheiro) {
     dinheiro_em_maos = quantidadeDinheiro;
     std::cout << "US$ " << quantidadeDinheiro << " foram adicionados à carteira de " << getPrimeiroNome() << std::endl;
 }
+
+void Personagem::giveDinheiroNaMao(long quantidadeDinheiro) {
+    dinheiro_em_maos += quantidadeDinheiro;
+    std::cout << "US$ " << quantidadeDinheiro << " foram adicionados à carteira de " << getPrimeiroNome() << std::endl;
+}
+
+void Personagem::takeDinheiroNaMao(long quantidadeDinheiro) {
+    dinheiro_em_maos -= quantidadeDinheiro;
+    std::cout << "US$ " << quantidadeDinheiro << " foram removidos da carteira de " << getPrimeiroNome() << std::endl;
+}

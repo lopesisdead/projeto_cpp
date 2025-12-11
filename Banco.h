@@ -39,6 +39,8 @@ public:
     long getSaldoBancario(Personagem& personagem);
     long getConta(Personagem& personagem);
     bool verificarExistenciaConta(long id_personagem);
+    bool verificaDinheiroEmMaos(Personagem& personagem, long valor);
+    bool verificaSaldoBancario(Personagem& personagem, long valor);
 };
 
 #endif // BANCO_H

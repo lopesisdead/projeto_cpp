@@ -32,7 +32,8 @@ public:
 
     // Setters
     void setDinheiroNaMao(long quantidadeDinheiro);
-    void setDinheiroBanco(long quantidadeDinheiro);
+    void giveDinheiroNaMao(long quantidadeDinheiro);
+    void takeDinheiroNaMao(long quantidadeDinheiro);
 
 };
 

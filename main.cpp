@@ -14,11 +14,22 @@ int main() {
     std::string ultimoNomePersonagem;
     std::cin >> ultimoNomePersonagem;
 
-    int id_criacao = 0; // fixo agora, mas depois será automaticamente incrementado
+    long id_criacao = 0; // fixo agora, mas depois será automaticamente incrementado
 
     Personagem personagemSessao(primeiroNomePersonagem, ultimoNomePersonagem, id_criacao);
 
     Banco bancoCentral;
+
+    std::cout << "Deseja abrir o menu bancário?" << std::endl;
+    std::cout << "1 - Sim" << std::endl;
+    std::cout << "2 - Não" << std::endl;
+
+    int decisaoUsuario;
+    std::cin >> decisaoUsuario;
+
+    while(decisaoUsuario){
+        // a
+    }
 
     std::cout << "Dinheiro na mão: " << personagemSessao.getDinheiroNaMao() << std::endl; // por padrão, 0
     personagemSessao.setDinheiroNaMao(250);

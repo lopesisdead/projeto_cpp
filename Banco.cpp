@@ -13,6 +13,14 @@ void Banco::printContaInexistente(std::string nome_personagem){
     std::cout << "Erro: " << nome_personagem << " não tem uma conta bancária em seu nome." << std::endl;
 }
 
+bool isPositive(long valor){
+    if(valor > 0){
+        return true;
+    }
+
+    return false;
+}
+
 // --------------------------------------------------------------------
 
 void Banco::criarConta(Personagem& personagem){
@@ -45,6 +53,18 @@ bool Banco::verificaDinheiroEmMaos(Personagem& personagem, long valor){
     if(valor > quantidade_dinheiro_em_maos){
         return false;
     }
+
+    return true;
+}
+
+bool Banco::verificaSaldoBancario(Personagem& personagem, long valor){
+    long saldo_bancario_personagem = getSaldoBancario(personagem);
+
+    if(valor > saldo_bancario_personagem){
+        return false;
+    }
+
+    return true;
 }
 
 bool Banco::aumentarSaldo(long id_personagem, long valor){
@@ -59,7 +79,7 @@ bool Banco::aumentarSaldo(long id_personagem, long valor){
 bool Banco::debitarSaldo(long id_personagem, long valor){
     contas[id_personagem].saldo -= valor;
 
-    std::cout << "Conta #" << contas[id_personagem].numero_conta << ": Débito de US$" << valor 
+    std::cout << "Conta #" << contas[id_personagem].numero_conta << ": Saque de US$" << valor 
               << " realizado. Novo saldo: US$" << contas[id_personagem].saldo << "." << std::endl;
 
     return true;
@@ -74,12 +94,18 @@ bool Banco::depositar(Personagem& personagem, long valor){
         return false;
     }
 
-    if (valor <= 0) {
+    if (!isPositive(valor)) {
         std::cout << "Erro. O valor a ser depositado não pode ser negativo." << std::endl;
         return false;
     }
 
+    if(!verificaDinheiroEmMaos(personagem, valor)){
+        std::cout << "Erro. Você não tem essa quantidade de dinheiro em mãos para depositar.";
+        return false;
+    }
+
     aumentarSaldo(id_personagem, valor);
+    personagem.takeDinheiroNaMao(valor);
     return true;
 }
 
@@ -92,12 +118,18 @@ bool Banco::sacar(Personagem& personagem, long valor){
         return false;
     }
 
-    if (valor <= 0) {
-        std::cout << "Erro. O valor a ser debitado não pode ser negativo." << std::endl;
+    if (!isPositive(valor)) {
+        std::cout << "Erro. O valor a ser sacado não pode ser negativo." << std::endl;
+        return false;
+    }
+
+    if(!verificaSaldoBancario(personagem, valor)){
+        std::cout << "Erro. O valor é maior do que o disponível nesta conta bancária.";
         return false;
     }
 
     debitarSaldo(id_personagem, valor);
+    personagem.giveDinheiroNaMao(valor);
     return true;
 
 }
