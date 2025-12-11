@@ -39,6 +39,14 @@ void Banco::criarConta(Personagem& personagem){
 
 // --------------------------------------------------------------------
 
+bool Banco::verificaDinheiroEmMaos(Personagem& personagem, long valor){
+    long quantidade_dinheiro_em_maos = personagem.getDinheiroNaMao();
+
+    if(valor > quantidade_dinheiro_em_maos){
+        return false;
+    }
+}
+
 bool Banco::aumentarSaldo(long id_personagem, long valor){
     contas[id_personagem].saldo += valor;
 
