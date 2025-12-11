@@ -156,7 +156,7 @@ long Banco::getConta(Personagem& personagem) {
         return contas[id_personagem].numero_conta;
     }
 
-    printContaExistente(personagem.getNomeCompleto());
+    printContaInexistente(personagem.getNomeCompleto());
     return -1; // indica erro. usuário precisa criar a conta primeiro.
 }
 
