@@ -1,5 +1,11 @@
 #include "Banco.h"
 
+namespace {
+    bool isPositive(long valor){
+        return valor > 0;
+    }
+}
+
 // construtor
 Banco::Banco() : proximo_numero_conta(100000) {
     std::cout << "Sistema bancário iniciado." << std::endl;
@@ -11,14 +17,6 @@ void Banco::printContaExistente(std::string nome_personagem){
 
 void Banco::printContaInexistente(std::string nome_personagem){
     std::cout << "Erro: " << nome_personagem << " não tem uma conta bancária em seu nome." << std::endl;
-}
-
-bool isPositive(long valor){
-    if(valor > 0){
-        return true;
-    }
-
-    return false;
 }
 
 // --------------------------------------------------------------------
@@ -35,7 +33,7 @@ void Banco::criarConta(Personagem& personagem){
 
     ContaBancaria novaConta;
     novaConta.numero_conta = proximo_numero_conta++;
-    novaConta.saldo = 0;
+    novaConta.saldo_bancario = 0;
 
     // associa o ID do Personagem ao objeto ContaBancaria no mapa
     contas[id_personagem] = novaConta;
@@ -47,7 +45,7 @@ void Banco::criarConta(Personagem& personagem){
 
 // --------------------------------------------------------------------
 
-bool Banco::verificaDinheiroEmMaos(Personagem& personagem, long valor){
+StatusTransacao Banco::verificaDinheiroEmMaos(Personagem& personagem, long valor){
     long quantidade_dinheiro_em_maos = personagem.getDinheiroNaMao();
 
     if(valor > quantidade_dinheiro_em_maos){
@@ -57,7 +55,7 @@ bool Banco::verificaDinheiroEmMaos(Personagem& personagem, long valor){
     return true;
 }
 
-bool Banco::verificaSaldoBancario(Personagem& personagem, long valor){
+StatusTransacao Banco::verificaSaldoBancario(Personagem& personagem, long valor){
     long saldo_bancario_personagem = getSaldoBancario(personagem);
 
     if(valor > saldo_bancario_personagem){
@@ -67,25 +65,25 @@ bool Banco::verificaSaldoBancario(Personagem& personagem, long valor){
     return true;
 }
 
-bool Banco::aumentarSaldo(long id_personagem, long valor){
-    contas[id_personagem].saldo += valor;
+StatusTransacao Banco::aumentarSaldo(long id_personagem, long valor){
+    contas[id_personagem].saldo_bancario += valor;
 
     std::cout << "Conta #" << contas[id_personagem].numero_conta << ": Depósito de US$" << valor 
-              << " realizado. Novo saldo: US$" << contas[id_personagem].saldo << "." << std::endl;
+              << " realizado. Novo saldo: US$" << contas[id_personagem].saldo_bancario << "." << std::endl;
 
     return true;
 }
 
-bool Banco::debitarSaldo(long id_personagem, long valor){
-    contas[id_personagem].saldo -= valor;
+StatusTransacao Banco::debitarSaldo(long id_personagem, long valor){
+    contas[id_personagem].saldo_bancario -= valor;
 
     std::cout << "Conta #" << contas[id_personagem].numero_conta << ": Saque de US$" << valor 
-              << " realizado. Novo saldo: US$" << contas[id_personagem].saldo << "." << std::endl;
+              << " realizado. Novo saldo: US$" << contas[id_personagem].saldo_bancario << "." << std::endl;
 
     return true;
 }
 
-bool Banco::depositar(Personagem& personagem, long valor){
+StatusTransacao Banco::depositar(Personagem& personagem, long valor){
     long id_personagem = personagem.getIdCriacao();
     std::string nome_personagem = personagem.getNomeCompleto();
 
@@ -109,7 +107,7 @@ bool Banco::depositar(Personagem& personagem, long valor){
     return true;
 }
 
-bool Banco::sacar(Personagem& personagem, long valor){
+StatusTransacao Banco::sacar(Personagem& personagem, long valor){
     long id_personagem = personagem.getIdCriacao();
     std::string nome_personagem = personagem.getNomeCompleto();
 
@@ -141,7 +139,7 @@ long Banco::getSaldoBancario(Personagem& personagem) {
     long id_personagem = personagem.getIdCriacao();
 
     if (verificarExistenciaConta(id_personagem)) {
-        return contas.at(id_personagem).saldo;
+        return contas.at(id_personagem).saldo_bancario;
     }
 
     return -1; // indicativo erro
@@ -160,7 +158,7 @@ long Banco::getConta(Personagem& personagem) {
     return -1; // indica erro. usuário precisa criar a conta primeiro.
 }
 
-bool Banco::verificarExistenciaConta(long id_personagem){
+StatusTransacao Banco::verificarExistenciaConta(long id_personagem){
     if(contas.count(id_personagem)){
         return true;
     }
