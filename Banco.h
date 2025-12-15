@@ -5,15 +5,7 @@
 #include <iostream>
 #include <map>
 #include "Personagem.h"
-
-enum class StatusTransacao {
-    SUCESSO,
-    CONTA_INEXISTENTE,
-    VALOR_NEGATIVO,
-    SALDO_INSUFICIENTE,
-    DINHEIRO_EM_MAOS_INSUFICIENTE,
-    CONTA_JA_EXISTENTE
-};
+#include "Utils.h"
 
 class Banco {
 private:

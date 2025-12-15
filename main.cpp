@@ -1,8 +1,9 @@
 #include <iostream>
 #include <string>
-#include <cstdlib> // Necessário para system()
+#include <cstdlib> // necessário para system()
 #include "Personagem.h"
 #include "Banco.h"
+#include "Utils.h"
 
 int main() {
     std::string primeiroNomePersonagem;
@@ -21,11 +22,11 @@ int main() {
     int decisaoUsuario = 0;
 
     do {
-        // Limpa o console a cada iteração
-        // Se estiver no Windows, use system("cls");
+        // limpa o console a cada iteração
+        // se estiver no Windows, use system("cls");
         system("clear");
 
-        // Cabeçalho persistente
+        // cabeçalho persistente
         std::cout << "====================================\n";
         std::cout << "Bem-vindo, " << personagemSessao.getNomeCompleto() << "\n";
         std::cout << "Dinheiro em mãos: US$ " << personagemSessao.getDinheiroNaMao() << "\n";
@@ -47,7 +48,7 @@ int main() {
         std::cout << "\nEscolha uma opção: ";
         std::cin >> decisaoUsuario;
 
-        std::cout << "\n"; // Pula linha para organização visual
+        std::cout << "\n"; // apenas para pular uma linha e deixar mais organizado visualmente
 
         switch(decisaoUsuario) {
             case 1: {
@@ -55,29 +56,56 @@ int main() {
                 std::cout << "Digite a quantidade: ";
                 std::cin >> valor;
                 personagemSessao.setDinheiroNaMao(valor);
+                std::cout << "Dinheiro em mãos definido para US$ " << valor << "." << std::endl;
                 break;
             }
             case 2: {
                 long valor;
                 std::cout << "Digite o valor do saque: ";
                 std::cin >> valor;
-                bancoCentral.sacar(personagemSessao, valor);
+                
+                StatusTransacao status = bancoCentral.sacar(personagemSessao, valor);
+                
+                if (status == StatusTransacao::SUCESSO) {
+                    std::cout << "Saque de US$" << valor << " realizado com sucesso. Dinheiro adicionado à sua carteira." << std::endl;
+                } else {
+                    std::cout << getStatusMessage(status) << std::endl;
+                }
                 break;
             }
             case 3: {
                 long valor;
                 std::cout << "Digite o valor do depósito: ";
                 std::cin >> valor;
-                bancoCentral.depositar(personagemSessao, valor);
+                
+                StatusTransacao status = bancoCentral.depositar(personagemSessao, valor);
+                
+                if (status == StatusTransacao::SUCESSO) {
+                    std::cout << "Depósito de US$" << valor << " realizado com sucesso." << std::endl;
+                } else {
+                    std::cout << getStatusMessage(status) << std::endl;
+                }
                 break;
             }
-            case 4:
-                bancoCentral.criarConta(personagemSessao);
+            case 4: {
+                StatusTransacao status = bancoCentral.criarConta(personagemSessao);
+                
+                if (status == StatusTransacao::SUCESSO) {
+                    long numConta = bancoCentral.getConta(personagemSessao);
+                    std::cout << "Conta bancária de #" << numConta << " criada no nome de " << personagemSessao.getNomeCompleto() << std::endl;
+                } else {
+                    std::cout << getStatusMessage(status) << std::endl;
+                }
                 break;
+            }
             case 5: {
                 long numConta = bancoCentral.getConta(personagemSessao);
                 if(numConta != -1) {
                     std::cout << "O número da sua conta é: " << numConta << std::endl;
+                } else {
+                    // como getConta retorna -1, usa a função de UI existente no Banco
+                    // que, idealmente, deveria ser movida.
+                    bancoCentral.printContaInexistente(personagemSessao.getNomeCompleto());
                 }
                 break;
             }
@@ -88,11 +116,11 @@ int main() {
                 std::cout << "Opção inválida, tente novamente.\n";
         }
 
-        // Pausa para que o usuário possa ler o resultado antes de limpar a tela
+        // pausa para que o usuário possa ler o resultado antes de limpar a tela
         if (decisaoUsuario != 6) {
             std::cout << "\nPressione Enter para continuar...";
-            std::cin.ignore(); // Limpa o buffer do teclado
-            std::cin.get();    // Aguarda o Enter
+            std::cin.ignore(); // limpa o buffer do teclado
+            std::cin.get();    // aguarda o Enter
         }
 
     } while (decisaoUsuario != 6);
