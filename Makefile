@@ -1,11 +1,15 @@
 CC = g++
-CFLAGS = -std=c++20 -Wall # flags de compilação: C++20 e alertas ativados
-TARGET = main           # nome executável
-SOURCES = main.cpp Personagem.cpp Banco.cpp Utils.cpp # todos os arquivos .cpp
+# -Iinclude diz ao gcc para procurar os arquivos.h na pasta include
+CFLAGS = -std=c++20 -Wall -Iinclude 
+# -lpqxx -lpq vincula a biblioteca do PostgreSQL
+LIBS = -lpqxx -lpq
+TARGET = main
+
+# localiza todos os arquivos .cpp na pasta src
+SOURCES = $(wildcard src/*.cpp)
 
 $(TARGET): $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS) -o $(TARGET)
+	$(CC) $(SOURCES) $(CFLAGS) $(LIBS) -o $(TARGET)
 
-# remover arquivos compilados
 clean:
-	rm -f $(TARGET) *.o
+	rm -f $(TARGET)

@@ -1,0 +1,7 @@
+# executáveis
+main
+teste
+*.o
+
+# segurança
+.env
