@@ -15,7 +15,7 @@ int main() {
     std::cout << "Digite o sobrenome do personagem: ";
     std::cin >> ultimoNomePersonagem;
 
-    long id_criacao = 0; 
+    long id_criacao = 0;
     Personagem personagemSessao(primeiroNomePersonagem, ultimoNomePersonagem, id_criacao);
     Banco bancoCentral;
 
